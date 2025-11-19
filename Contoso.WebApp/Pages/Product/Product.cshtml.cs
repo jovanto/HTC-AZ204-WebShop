@@ -1,4 +1,7 @@
+using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 using Contoso.WebApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,6 +43,40 @@ public class ProductModel : PageModel
         }
 
         Product = response.Content;
+
+        // get the product.ImageUrl and check blob metadata for 'releasedate'
+        // if releasedate is in the future, replace with comingsoon image URL (SAS included)
+        var sas = "?sp=racwdli&st=2025-11-19T03:15:26Z&se=2025-12-10T11:30:26Z&spr=https&sv=2024-11-04&sr=c&sig=BnedqjIBKqmmvh33wtXoLKUyrvRLxOD40du%2ByWTWRX4%3D";
+        var comingSoonUrl = "https://webshopstoragetest.blob.core.windows.net/storagecontainer/comingsoon.jpeg" + sas;
+
+        if (!string.IsNullOrEmpty(Product?.ImageUrl))
+        {
+            // ensure we target the blob with SAS so we can read metadata
+            var targetUrl = Product.ImageUrl.Contains("?") ? Product.ImageUrl : Product.ImageUrl + sas;
+
+            try
+            {
+                var blobClient = new BlobClient(new Uri(targetUrl));
+                var propsResponse = await blobClient.GetPropertiesAsync();
+                var metadata = propsResponse.Value.Metadata;
+
+                if (metadata != null && metadata.TryGetValue("releasedate", out var releasedateValue))
+                {
+                    if (!string.IsNullOrEmpty(releasedateValue) && DateTime.TryParse(releasedateValue, out var releaseDate))
+                    {
+                        if (releaseDate.ToUniversalTime() > DateTime.UtcNow)
+                        {
+                            Product.ImageUrl = comingSoonUrl;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log if needed; do not block page render on metadata failures
+                Console.WriteLine($"Failed to read blob metadata for {targetUrl}: {ex.Message}");
+            }
+        }
 
         isAdmin = true;
     }
