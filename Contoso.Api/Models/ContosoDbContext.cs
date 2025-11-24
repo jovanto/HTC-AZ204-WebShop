@@ -35,15 +35,13 @@ namespace Contoso.Api.Models
             modelBuilder.Entity<Order>()
                 .Property(o => o.Status)
                 .HasConversion<string>();
-
-                modelBuilder.Entity<OrderItem>()
-            .HasKey(oi => oi.Id);
- 
-        // Configure the one-to-many relationship
-            modelBuilder.Entity<Order>()
-                .HasMany(o => o.Items)
-                .WithOne(oi => oi.Order)
-                .HasForeignKey(oi => oi.OrderId);
+            // Configure owned collection for Cosmos DB (embedded in Order document)
+            modelBuilder.Entity<Order>().OwnsMany(o => o.Items, oiBuilder =>
+            {
+                oiBuilder.WithOwner();
+                oiBuilder.Property(oi => oi.Id); // keep Id for mapping
+                oiBuilder.ToJsonProperty("items");
+            });
         }
     }
 }

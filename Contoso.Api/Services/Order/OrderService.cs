@@ -18,22 +18,18 @@ public class OrderService : IOrderService
     }
     public async Task<IEnumerable<OrderDto>> GetOrdersAsync(int userId)
     {
-         var orders = await _context.Orders
-                                    .Where(o => o.UserId == userId)
-                                    .Include(o => o.Items!)
-                                    .ThenInclude(o => o.Product)
-                                    .ToListAsync();
+    var orders = await _context.Orders
+                   .Where(o => o.UserId == userId)
+                   .ToListAsync();
 
         return _mapper.Map<IEnumerable<OrderDto>>(orders);
     }
 
     public async Task<OrderDto> GetOrderByIdAsync(int id, int userId)
     {
-        var order = await _context.Orders
-                            .Where(o => o.UserId == userId && o.Id == id)
-                            .Include(o => o.Items!)
-                            .ThenInclude(o => o.Product)
-                            .FirstOrDefaultAsync();
+    var order = await _context.Orders
+                .Where(o => o.UserId == userId && o.Id == id)
+                .FirstOrDefaultAsync();
 
         return _mapper.Map<OrderDto>(order);
     }
