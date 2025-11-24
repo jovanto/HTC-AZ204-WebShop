@@ -4,7 +4,6 @@ A SmartWebShop application built with ASP .NET Technology. The frontend is an AS
 
 ## Table of Contents
 
-
 - [Frontend Screens](#frontend-screens)
 - [Backend API](#backend-api)
 - [Usage](#usage)
