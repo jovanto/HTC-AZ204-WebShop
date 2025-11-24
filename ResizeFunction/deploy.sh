@@ -3,9 +3,9 @@
 # Azure Function App Deployment Script for Image Resize Function
 
 # Configuration
-FUNCTION_APP_NAME="resizeImageFunctionApp"
-RESOURCE_GROUP="your-resource-group"  # Update this with your resource group
-SUBSCRIPTION_ID="your-subscription-id"  # Update this with your subscription ID
+FUNCTION_APP_NAME="resizeImageFunctionApplication"
+RESOURCE_GROUP="RG-Hack"  # Update this with your resource group
+SUBSCRIPTION_ID="1a7551e1-7de4-4d88-8715-40e11416ece3"  # Update this with your subscription ID
 
 echo "🚀 Starting deployment to Azure Function App: $FUNCTION_APP_NAME"
 

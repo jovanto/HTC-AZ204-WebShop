@@ -28,7 +28,7 @@ namespace ResizeFunction
         [Function("ResizeImage")]
         public async Task Run(
             // Connection is set to an empty string because the AzureWebJobsStorage connection string is used by default
-            [BlobTrigger("images/{name}", Connection = "STORAGE_ACCOUNT_CONNECTION")] Stream stream,
+            [BlobTrigger("storagecontainer/{name}", Connection = "AzureWebJobsStorage")] Stream stream,
             string name)
         {
             using var memoryStream = new MemoryStream();
@@ -65,7 +65,7 @@ namespace ResizeFunction
             var newFileName = $"{Path.GetFileNameWithoutExtension(name)}_thumb{Path.GetExtension(name)}";
  
             var blobService = new BlobServiceClient(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
-            var containerClient = blobService.GetBlobContainerClient("contosoimagesresized");
+            var containerClient = blobService.GetBlobContainerClient("thumbnailcontainer");
             var blobClient = containerClient.GetBlobClient(newFileName);
  
             IImageEncoder encoder = name.ToLower() switch
