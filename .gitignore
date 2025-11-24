@@ -1,1 +1,38 @@
-.DS_Store
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+.vscode/
+.idea/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Packages
+packages/
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Build artifacts
+*.dll
+*.pdb
+*.exe
+
+# Local settings
+local.settings.json
+**/local.settings.json
