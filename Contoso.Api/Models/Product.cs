@@ -20,5 +20,10 @@ namespace Contoso.Api.Models
 
         public DateTime CreatedAt { get; set; }
 
+        public Product()
+        {
+            Id = Math.Abs(Guid.NewGuid().GetHashCode());
+        }
+
     }
 }

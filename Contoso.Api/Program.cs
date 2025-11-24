@@ -45,13 +45,14 @@ builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
 builder.Services.AddTransient<IOrderService, OrderService>();
 builder.Services.AddTransient<IUserService, UserService>();
 
-// Get connection string for SQL Server
-var connectionString = builder.Configuration.GetConnectionString("ContosoDBConnection");
+// Get Cosmos DB connection settings
+var cosmosConnectionString = builder.Configuration["Azure:CosmosDB:ConnectionString"];
+var cosmosDatabaseName = builder.Configuration["Azure:CosmosDB:DatabaseName"];
 
-// Add DbContext
+// Add DbContext for Cosmos DB
 builder.Services.AddDbContext<ContosoDbContext>(options =>
 {
-    options.UseSqlServer(connectionString);
+    options.UseCosmos(cosmosConnectionString, cosmosDatabaseName);
 });
 
 var app = builder.Build();

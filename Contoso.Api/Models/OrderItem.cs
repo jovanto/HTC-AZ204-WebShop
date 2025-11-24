@@ -21,5 +21,10 @@ namespace Contoso.Api.Models
         public decimal UnitPrice { get; set; }
 
         public int Quantity { get; set; }
+
+        public OrderItem()
+        {
+            Id = Math.Abs(Guid.NewGuid().GetHashCode());
+        }
     }
 }

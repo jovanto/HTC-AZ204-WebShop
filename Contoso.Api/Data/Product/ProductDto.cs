@@ -17,5 +17,10 @@ namespace Contoso.Api.Data
         public string? ImageUrl { get; set; }
 
         public byte[]? Image { get; set; }
+        public ProductDto()
+                {
+                    Id = Math.Abs(Guid.NewGuid().GetHashCode());
+                }
+        
     }
 }

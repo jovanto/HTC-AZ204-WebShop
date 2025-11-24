@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Contoso.Api.Data;
 
@@ -5,6 +6,7 @@ namespace Contoso.Api.Models
 {
     public class Order
     {
+        [Key]
         public int Id { get; set; }
 
         public int UserId { get; set; }
@@ -19,5 +21,10 @@ namespace Contoso.Api.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual IEnumerable<OrderItem>? Items { get; set; }
+
+        public Order()
+        {
+            Id = Math.Abs(Guid.NewGuid().GetHashCode());
+        }
     }
 }

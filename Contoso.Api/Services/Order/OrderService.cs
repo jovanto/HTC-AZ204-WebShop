@@ -40,35 +40,24 @@ public class OrderService : IOrderService
 
     public async Task<OrderDto> CreateOrderAsync(OrderDto orderDto)
     {
+        var orderItems = orderDto.Items?.Select(item => new OrderItem
+        {
+            ProductId = item.ProductId,
+            Quantity = item.Quantity,
+            UnitPrice = item.Price
+        }).ToList();
+
         var newOrder = new Order
         {
             UserId = orderDto.UserId,
             Total = orderDto.Total,
             Status = OrderStatus.Pending,
             CreatedAt = DateTime.UtcNow,
+            Items = orderItems
         };
 
         _context.Orders.Add(newOrder);
-
         await _context.SaveChangesAsync();
-
-        if (orderDto.Items != null)
-        {
-            foreach (var orderItem in orderDto.Items)
-            {
-                var newOrderItem = new OrderItem
-                {
-                    OrderId = newOrder.Id,
-                    ProductId = orderItem.ProductId,
-                    Quantity = orderItem.Quantity,
-                    UnitPrice = orderItem.Price
-                };
-
-                _context.OrderItems.Add(newOrderItem);
-            }
-
-            await _context.SaveChangesAsync();      
-        }
 
         return _mapper.Map<OrderDto>(newOrder);     
     }

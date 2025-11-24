@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Contoso.Api.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Contoso.Api.Services;
 public class UserService : IUserService
@@ -13,7 +14,8 @@ public class UserService : IUserService
 
     public async Task<UserInfoDto> GetUserInfo(int userId)
     {
-        var user = await _context.Users.FindAsync(userId);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
         {
@@ -30,7 +32,8 @@ public class UserService : IUserService
 
     public async Task UpdateUserInfo(UserInfoDto userInfo, int userId)
     {
-        var user = await _context.Users.FindAsync(userId);
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Id == userId);
 
         if (user == null)
         {

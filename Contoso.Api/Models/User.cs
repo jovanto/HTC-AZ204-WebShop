@@ -16,5 +16,10 @@ namespace Contoso.Api.Models
         public string? PasswordHash { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public User()
+        {
+            Id = Math.Abs(Guid.NewGuid().GetHashCode());
+        }
     }
 }

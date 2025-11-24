@@ -1,5 +1,3 @@
-using Microsoft.Identity.Client;
-
 namespace Contoso.Api.Data;
 
 public class OrderDto
