@@ -22,32 +22,32 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Home/Home">Home</a>
                         </li>
-                        @if (Context.Session.GetString("IsAdmin") != "true"){
+                        @if (User.Identity.IsAuthenticated){
                             <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-page="/Cart/Cart">Cart(@Context.Session.GetString("CartCount"))</a>
                             </li>
                         }
                     </ul>
-                    @if(Context.Session.GetString("AuthToken") != null)
+                    @if(User.Identity.IsAuthenticated)
                     {
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Profile/Profile">User Profile(@Context.Session.GetString("UserName"))</a>
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Profile/Profile">User Profile(@User.Identity.Name)</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Account/Logout">Logout</a>
                             </li>
                         </ul>
                     }
-                    else 
+                    else
                     {
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <span class="nav-link text-dark">Anonymous</span>
-                            </li> 
+                            </li>
                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Login</a>
-                           </li>     
+                           </li>    
                         </ul>          
                     }  
                 </div>
@@ -59,11 +59,11 @@
             @RenderBody()
         </main>
     </div>
-
+ 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+ 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

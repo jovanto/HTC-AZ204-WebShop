@@ -8,9 +8,7 @@ namespace Contoso.WebApp.Services
 {
     public interface IContosoAPI
     {
-        
-        [Post("/api/Account/Login")]
-        Task<ApiResponse<LoginDto>> LoginAsync(LoginInputModel loginInputModel);
+    
 
         [Post("/api/Products")]
         Task<ApiResponse<PagedResult<ProductDto>>> GetProductsPagedAsync(QueryParameters queryParameters);
