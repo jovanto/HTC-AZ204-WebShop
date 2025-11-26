@@ -19,13 +19,13 @@ public class LoginModel : PageModel
     {
         if (User.Identity.IsAuthenticated)
         {
-            return RedirectToPage("/Home/Home");
+            return RedirectToPage("/");
         }
         else
         {
             return Challenge(new AuthenticationProperties
             {
-                RedirectUri = Url.Page("/Home/Home")
+                RedirectUri = "/"
             }, OpenIdConnectDefaults.AuthenticationScheme);
         }
     }
