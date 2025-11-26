@@ -36,7 +36,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost("create")]
-    [Authorize]
+    // [Authorize]
     public async Task<ProductDto> CreateProductAsync(ProductDto product)
     {
         return await _productService.CreateProductAsync(product);
@@ -44,7 +44,7 @@ public class ProductsController : ControllerBase
 
 
     [HttpPut]
-    [Authorize]
+    // [Authorize]
     public async Task<IActionResult> UpdateProductAsync(ProductDto product)
     {
         var updatedProduct = await _productService.UpdateProductAsync(product);
